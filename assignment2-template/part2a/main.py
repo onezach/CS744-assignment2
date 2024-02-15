@@ -157,7 +157,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--master-ip", required=True)
     parser.add_argument("--num-nodes", required=True, type=int)
-    parser.add_argument("--rank", required=True)
+    parser.add_argument("--rank", required=True, type=int)
 
     args = parser.parse_args()
 
