@@ -12,6 +12,7 @@ import random
 import model as mdl
 import time
 import torch.distributed as dist
+from torch.utils.data.distributed import DistributedSampler as DS
 import argparse
 device = "cpu"
 torch.set_num_threads(4)
@@ -130,10 +131,11 @@ def main(master_ip, world_size, rank):
             normalize])
     training_set = datasets.CIFAR10(root="./data", train=True,
                                                 download=True, transform=transform_train)
+    sampler = DS(training_set, num_replicas=world_size, rank=rank)
     train_loader = torch.utils.data.DataLoader(training_set,
                                                     num_workers=2,
                                                     batch_size=batch_size,
-                                                    sampler=None,
+                                                    sampler=sampler,
                                                     shuffle=True,
                                                     pin_memory=True)
     test_set = datasets.CIFAR10(root="./data", train=False,
