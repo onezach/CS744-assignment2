@@ -42,6 +42,7 @@ def train_model(model, train_loader, optimizer, criterion, epoch):
 
             # print statistics
             running_loss += loss.item()
+            print(f'[{e + 1}, {batch_idx + 1:5d}]')
             if (batch_idx+1) % 20 == 0:    # print every 20 mini-batches
                 end_time = time.time()
                 print(f'[{e + 1}, {batch_idx + 1:5d}] loss: {running_loss / 20:.3f} time: {(end_time - start_time) / 20 :.3f}')
