@@ -23,11 +23,13 @@ def train_model(model, train_loader, optimizer, criterion, epoch):
     criterion (nn.CrossEntropyLoss) : Loss function used to train the network
     epoch (int): Current epoch number
     """
+    print('start training!')
     for e in range(epoch):
         running_loss = 0.0
         # remember to exit the train loop at end of the epoch
         start_time = time.time()
         for batch_idx, (data, target) in enumerate(train_loader):
+            print('epoch: ',e+1,'batch: ',batch_idx+1)
             # Your code goes here!
             data, target = data.to(device), target.to(device)
             
@@ -42,7 +44,7 @@ def train_model(model, train_loader, optimizer, criterion, epoch):
 
             # print statistics
             running_loss += loss.item()
-            print(f'[{e + 1}, {batch_idx + 1:5d}]')
+            
             if (batch_idx+1) % 20 == 0:    # print every 20 mini-batches
                 end_time = time.time()
                 print(f'[{e + 1}, {batch_idx + 1:5d}] loss: {running_loss / 20:.3f} time: {(end_time - start_time) / 20 :.3f}')
