@@ -43,26 +43,26 @@ def train_model(model, train_loader, optimizer, criterion, epoch, world_size, ra
         # gradient aggregation
         for param in model.parameters():
             if rank == 0:
-                print(param.grad)
+                # print(param.grad)
                 gather_list = []
                 for i in range(world_size):
                     gather_list.append(torch.empty(param.grad.size()))
 
-                print("gather_list:")
-                print(gather_list)
+                # print("gather_list:")
+                # print(gather_list)
 
                 # gather gradients from all participating workers
                 dist.gather(tensor=param.grad, gather_list=gather_list)
                 
-                print("after gather:")
-                print(param.grad)
-                print(gather_list)
-                # elementwise mean
-                e_mean = torch.mean(torch.stack(gather_list))
-                print(e_mean)
+                # print("after gather:")
+                # print(param.grad)
+                # print(gather_list)
+                # elementwise mean (reduced along 0-dimension of stacked gradients)
+                e_mean = torch.mean(torch.stack(gather_list), dim=0)
+                # print(e_mean)
                 # scatter mean vector
                 mean_vector = [e_mean] * world_size
-                print(mean_vector)
+                # print(mean_vector)
                 dist.scatter(tensor=param.grad, scatter_list=mean_vector)
             else:
                 # workers update gradient with received vector and continue training
