@@ -1,0 +1,11 @@
+name: cs744_a2
+channels: 
+  - pytorch
+  - defaults
+dependencies:
+  - pytorch 
+  - cpuonly
+  - torchvision 
+  - torchaudio
+  - numpy
+  
