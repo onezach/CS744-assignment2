@@ -16,7 +16,7 @@ import argparse
 device = "cpu"
 torch.set_num_threads(4)
 
-batch_size = 256 # batch for one node
+batch_size = 64 # 256 # batch for one node
 def train_model(model, train_loader, optimizer, criterion, epoch, world_size, rank):
     """
     model (torch.nn.module): The model created to train
@@ -112,7 +112,7 @@ def main(master_ip, world_size, rank):
     np.random.seed(11)
 
     # batch size per worker
-    batch_size = int(batch_size/world_size)
+    # batch_size = int(batch_size/world_size)
 
     normalize = transforms.Normalize(mean=[x/255.0 for x in [125.3, 123.0, 113.9]],
                                 std=[x/255.0 for x in [63.0, 62.1, 66.7]])
