@@ -1,4 +1,2 @@
-./assignment2/template/data
-cifar-10-batches-py/
-cifar-10-python.tar.gz
 __pycache__/
+data/
