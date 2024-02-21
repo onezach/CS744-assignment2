@@ -24,6 +24,8 @@ def train_model(model, train_loader, optimizer, criterion, epoch):
     epoch (int): Current epoch number
     """
     # remember to exit the train loop at end of the epoch
+    print("Epoch", epoch)
+    
     running_loss = 0.0
     start_time = time.time()
     for batch_idx, (data, target) in enumerate(train_loader):
@@ -42,9 +44,9 @@ def train_model(model, train_loader, optimizer, criterion, epoch):
         # print statistics
         running_loss += loss.item()
 
-        if (batch_idx+1) % 20 == 0:    # print every 20 mini-batches
+        if batch_idx == 1 or (batch_idx+1) % 20 == 0:    # print every 20 mini-batches
             end_time = time.time()
-            print(f'[{epoch + 1}, {batch_idx + 1:5d}] loss: {running_loss / 20:.3f} time: {(end_time - start_time) / 20 :.3f}')
+            print(f'[, {batch_idx + 1:5d}] loss: {running_loss / 20:.3f} time: {(end_time - start_time) / 20 :.3f}')
             start_time = time.time()
             running_loss = 0.0
 
