@@ -16,6 +16,7 @@ part() {
 }
 
 part1() {
+    mkdir -p "$LOG_DIR/part1"  # Ensure the directory exists
     echo "Starting part1"
     cd $HOME/CS744-assignment2/main/part1 && ./run-p1.sh 0 > "$LOG_DIR/part1/log" 2>&1
 }
