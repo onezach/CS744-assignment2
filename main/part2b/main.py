@@ -143,6 +143,8 @@ def main(master_ip, world_size, rank):
         train_model(model, train_loader, optimizer, training_criterion, epoch, world_size, rank)
         test_model(model, test_loader, training_criterion)
 
+    dist.destroy_process_group()
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--master-ip", required=True)
