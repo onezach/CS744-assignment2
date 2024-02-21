@@ -14,7 +14,7 @@ part() {
 
 part1() {
     echo "Starting part1"
-    cd ~/CS744-assignment2/main/part1 && ./run-p$part_id.sh 0
+    cd ~/CS744-assignment2/main/part1 && ./run-p1.sh 0
 }
 
 main() {
@@ -22,7 +22,7 @@ main() {
     # part 2a, 2b, 3
     for part_id in "${PART_IDS[@]}"; do
         cd ~/CS744-assignment2/main/part$part_id && ./run-p$part_id.sh 0 & # Run the master process
-        rank = 1
+        rank=1
         for worker_port in "${WORKERS_PORT[@]}"; do
             part $part_id $rank $worker_port
             ((rank++))
@@ -31,5 +31,6 @@ main() {
     done
 }
 
+cd ~/CS744-assignment2; git pull
 parallel-ssh -i -h hostnames -O StrictHostKeyChecking=no "cd ~/CS744-assignment2; git pull"
 main
