@@ -13,11 +13,14 @@ import model as mdl
 import time
 import torch.distributed as dist
 from torch.utils.data.distributed import DistributedSampler as DS
+from torch.nn.parallel import DistributedDataParallel as DDP
 import argparse
+
+
 device = "cpu"
 torch.set_num_threads(4)
 
-total_batch_size = 256 # batch for one node
+total_batch_size = 256 # total size of batch for all nodes
 def train_model(model, train_loader, optimizer, criterion, epoch, world_size, rank):
     """
     model (torch.nn.module): The model created to train
@@ -41,28 +44,7 @@ def train_model(model, train_loader, optimizer, criterion, epoch, world_size, ra
         loss = criterion(outputs, target)
         loss.backward()
 
-        # gradient aggregation
-        for param in model.parameters():
-            if rank == 0:
-                
-                gather_list = []
-                for i in range(world_size):
-                    gather_list.append(torch.empty(param.grad.size()))
-
-                # gather gradients from all participating workers
-                dist.gather(tensor=param.grad, gather_list=gather_list)
-                
-                # elementwise mean (reduced along 0-dimension of stacked gradients)
-                e_mean = torch.mean(torch.stack(gather_list), dim=0)
-                
-                # scatter mean vector
-                mean_vector = [e_mean] * world_size
-                
-                dist.scatter(tensor=param.grad, scatter_list=mean_vector)
-            else:
-                # workers update gradient with received vector and continue training
-                dist.gather(param.grad)
-                dist.scatter(param.grad)
+        # Gradient sync automatically done by DDP
 
         optimizer.step()
 
@@ -150,12 +132,15 @@ def main(master_ip, world_size, rank):
 
     model = mdl.VGG11()
     model.to(device)
-    optimizer = optim.SGD(model.parameters(), lr=0.1,
+    ddp_model = DDP(model) # device_ids=None for CPU
+    optimizer = optim.SGD(ddp_model.parameters(), lr=0.1,
                           momentum=0.9, weight_decay=0.0001)
     # running training for one epoch
     for epoch in range(1):
-        train_model(model, train_loader, optimizer, training_criterion, epoch, world_size, rank)
-        test_model(model, test_loader, training_criterion)
+        train_model(ddp_model, train_loader, optimizer, training_criterion, epoch, world_size, rank)
+        test_model(ddp_model, test_loader, training_criterion)
+    
+    dist.destroy_process_group()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
