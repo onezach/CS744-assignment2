@@ -2,7 +2,7 @@
 
 WORKERS_PORT=('60001' '60002' '60003')
 HOST_NAME='cs744@c220g2-011110.wisc.cloudlab.us'
-PART_IDS=("1" "2a" "2b" "3")
+PART_IDS=("2a" "2b" "3")
 
 part() {
     local part_id=$1
@@ -12,9 +12,15 @@ part() {
     echo "Started part$part_id with rank $rank on $HOST_NAME:$worker_port"
 }
 
+part1() {
+    cd ~/CS744-assignment2/main/part1 && ./run-p$part_id.sh 0
+}
+
 main() {
+    part1
+    # part 2a, 2b, 3
     for part_id in "${PART_IDS[@]}"; do
-        cd ~/CS744-assignment2/main/part$part_id && ./run-p$part_id.sh 0 # Run the master process
+        cd ~/CS744-assignment2/main/part$part_id && ./run-p$part_id.sh 0 & # Run the master process
         rank = 1
         for worker_port in "${WORKERS_PORT[@]}"; do
             part $part_id $rank $worker_port
