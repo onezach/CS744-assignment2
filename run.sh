@@ -13,6 +13,7 @@ part() {
 }
 
 part1() {
+    echo "Starting part1"
     cd ~/CS744-assignment2/main/part1 && ./run-p$part_id.sh 0
 }
 
