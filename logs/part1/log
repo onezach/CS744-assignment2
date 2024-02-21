@@ -1,0 +1,10 @@
+Files already downloaded and verified
+Files already downloaded and verified
+Epoch 0
+[,     1] loss: 2.725 time: 1.749
+[,    40] loss: 5.258 time: 1.405
+[,    80] loss: 2.342 time: 1.414
+[,   120] loss: 2.274 time: 1.411
+[,   160] loss: 2.256 time: 1.424
+Test set: Average loss: 2.1721, Accuracy: 1589/10000 (16%)
+
