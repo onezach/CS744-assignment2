@@ -14,7 +14,7 @@ import time
 device = "cpu"
 torch.set_num_threads(4)
 
-batch_size = 1250 # batch for one node
+batch_size = 256 # batch for one node
 def train_model(model, train_loader, optimizer, criterion, epoch):
     """
     model (torch.nn.module): The model created to train

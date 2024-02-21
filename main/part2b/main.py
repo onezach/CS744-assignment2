@@ -17,7 +17,7 @@ import argparse
 device = "cpu"
 torch.set_num_threads(4)
 
-total_batch_size = 40 # # total size of batch for all nodes
+total_batch_size = 256 # # total size of batch for all nodes
 def train_model(model, train_loader, optimizer, criterion, epoch, world_size, rank):
     """
     model (torch.nn.module): The model created to train
