@@ -49,10 +49,14 @@ def train_model(model, train_loader, optimizer, criterion, epoch):
             print(f'[, {batch_idx + 1:5d}] loss: {running_loss:.3f} time: {(end_time - start_time) :.3f}')
             start_time = time.time()
             running_loss = 0.0
-
-        if batch_idx == 39:    # print at the 40th mini-batch
+        elif batch_idx == 39:    # print at the 40th mini-batch
             end_time = time.time()
             print(f'[, {batch_idx + 1:5d}] loss: {running_loss / 39:.3f} time: {(end_time - start_time) / 39 :.3f}')
+            start_time = time.time()
+            running_loss = 0.0
+        elif (batch_idx+1) %40==0:    # print every 40 mini-batch
+            end_time = time.time()
+            print(f'[, {batch_idx + 1:5d}] loss: {running_loss / 40:.3f} time: {(end_time - start_time) / 40 :.3f}')
             start_time = time.time()
             running_loss = 0.0
 
