@@ -71,9 +71,15 @@ def train_model(model, train_loader, optimizer, criterion, epoch, world_size, ra
         # print statistics
         running_loss += loss.item()
 
-        if batch_idx == 1 or (batch_idx+1) % 20 == 0:    # print every 20 mini-batches
+        if batch_idx == 0:    # print at the first mini-batch
             end_time = time.time()
-            print(f'[, {batch_idx + 1:5d}] loss: {running_loss / 20:.3f} time: {(end_time - start_time) / 20 :.3f}')
+            print(f'[, {batch_idx + 1:5d}] loss: {running_loss:.3f} time: {(end_time - start_time) :.3f}')
+            start_time = time.time()
+            running_loss = 0.0
+
+        if batch_idx == 39:    # print at the 40th mini-batch
+            end_time = time.time()
+            print(f'[, {batch_idx + 1:5d}] loss: {running_loss / 39:.3f} time: {(end_time - start_time) / 39 :.3f}')
             start_time = time.time()
             running_loss = 0.0
 
