@@ -14,9 +14,8 @@ part() {
 
 main() {
     for part_id in "${PART_IDS[@]}"; do
-        rank=0
-        cd ~/CS744-assignment2/main/part$part_id && ./run-p$part_id.sh $rank # Run the master process
-        ((rank++))
+        cd ~/CS744-assignment2/main/part$part_id && ./run-p$part_id.sh 0 # Run the master process
+        rank = 1
         for worker_port in "${WORKERS_PORT[@]}"; do
             part $part_id $rank $worker_port
             ((rank++))
