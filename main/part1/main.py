@@ -14,7 +14,7 @@ import time
 device = "cpu"
 torch.set_num_threads(4)
 
-batch_size = 40 # batch for one node
+batch_size = 1250 # batch for one node
 def train_model(model, train_loader, optimizer, criterion, epoch):
     """
     model (torch.nn.module): The model created to train
@@ -56,7 +56,7 @@ def train_model(model, train_loader, optimizer, criterion, epoch):
             start_time = time.time()
             running_loss = 0.0
 
-        print(f'[, {batch_idx + 1:5d}] loss: {running_loss :.3f} time: {(end_time - start_time) :.3f}')
+        # print(f'[, {batch_idx + 1:5d}] loss: {running_loss :.3f} time: {(end_time - start_time) :.3f}')
 
     return None
 
