@@ -15,6 +15,8 @@ part() {
 main() {
     for part_id in "${PART_IDS[@]}"; do
         rank=0
+        cd ~/CS744-assignment2/main/part$part_id && ./run-p$part_id.sh $rank # Run the master process
+        ((rank++))
         for worker_port in "${WORKERS_PORT[@]}"; do
             part $part_id $rank $worker_port
             ((rank++))
@@ -23,5 +25,5 @@ main() {
     done
 }
 
-parallel-ssh -i -h hostnames -O StrictHostKeyChecking=no "cd ~/CS744-assignment2; git pull" || exit 1
+parallel-ssh -i -h hostnames -O StrictHostKeyChecking=no "cd ~/CS744-assignment2; git pull"
 main

@@ -7,4 +7,4 @@ if [ $# != 1 ]; then
     exit 1
 fi
 
-python main.py --master-ip '172.18.0.2' --num-nodes 4 --rank $1
+/home/cs744/miniconda3/bin/python main.py --master-ip '172.18.0.2' --num-nodes 4 --rank $1
