@@ -4,6 +4,7 @@ WORKERS_PORT=('60001' '60002' '60003')
 HOST_NAME='cs744@c220g2-011110.wisc.cloudlab.us'
 PART_IDS=("2a" "2b" "3")
 LOG_DIR="$HOME/CS744-assignment2/logs"  # Define a base directory for logs
+TIME_STAMP=$(date +%Y-%m-%d_%H-%M-%S)
 
 part() {
     local part_id=$1
@@ -23,7 +24,7 @@ main() {
     part1
     # part 2a, 2b, 3
     for part_id in "${PART_IDS[@]}"; do
-        mkdir -p "$LOG_DIR/part$part_id"
+        mkdir -p "$LOG_DIR/part$part_id" && ls "$LOG_DIR/part$part_id" || echo "Failed to create log directory for part$part_id"
         cd $HOME/CS744-assignment2/main/part$part_id && ./run-p$part_id.sh 0 > "$LOG_DIR/part$part_id/rank0.log" 2>&1 & # Run the master process
         rank=1
         for worker_port in "${WORKERS_PORT[@]}"; do
@@ -36,7 +37,8 @@ main() {
 }
 
 # Ensure base log directory exists
-mkdir -p "$LOG_DIR"
 cd $HOME/CS744-assignment2; git pull
+mkdir -p "$LOG_DIR" && ls "$LOG_DIR" || echo "Failed to create base log directory"
 parallel-ssh -i -h hostnames -O StrictHostKeyChecking=no "cd $HOME/CS744-assignment2; git pull"
 main
+git add "$LOG_DIR"; git commit -m "Logs from $TIME_STAMP"
