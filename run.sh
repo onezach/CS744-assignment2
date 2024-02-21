@@ -25,6 +25,7 @@ main() {
         cd ~/CS744-assignment2/main/part$part_id && ./run-p$part_id.sh 0 > ./logs/rank0 & # Run the master process
         rank=1
         for worker_port in "${WORKERS_PORT[@]}"; do
+            sleep 5
             part $part_id $rank $worker_port
             ((rank++))
         done
