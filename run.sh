@@ -29,7 +29,7 @@ main() {
         cd $HOME/CS744-assignment2/main/part$part_id && ./run-p$part_id.sh 0 > "$LOG_DIR/part$part_id/rank0.log" & # Run the master process
         rank=1
         for worker_port in "${WORKERS_PORT[@]}"; do
-            sleep 2  # Ensure staggered starts to help avoid port conflicts
+            sleep 5  # Ensure staggered starts to help avoid port conflicts
             part $part_id $rank $worker_port
             ((rank++))
         done
