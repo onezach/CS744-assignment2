@@ -56,6 +56,8 @@ def train_model(model, train_loader, optimizer, criterion, epoch):
             start_time = time.time()
             running_loss = 0.0
 
+        print(f'[, {batch_idx + 1:5d}] loss: {running_loss :.3f} time: {(end_time - start_time) :.3f}')
+
     return None
 
 def test_model(model, test_loader, criterion):
