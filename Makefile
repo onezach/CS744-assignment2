@@ -1,4 +1,5 @@
 run-all:
+	git pull
 	./run.sh 1
 	./run.sh 2a
 	./run.sh 2b
