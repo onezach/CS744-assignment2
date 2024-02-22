@@ -1,22 +1,23 @@
 import os
 import torch
-import json
-import copy
+import sys
 import numpy as np
 from torchvision import datasets, transforms
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
-import logging
-import random
 import model as mdl
 import time
 import torch.distributed as dist
 from torch.utils.data.distributed import DistributedSampler as DS
 from torch.nn.parallel import DistributedDataParallel as DDP
 import argparse
-from ..log import log_loss
 
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
+
+from log import log_loss
 
 device = "cpu"
 torch.set_num_threads(4)
