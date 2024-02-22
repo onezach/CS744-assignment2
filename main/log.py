@@ -1,6 +1,6 @@
 import time
 
-def log_loss(batch_idx, running_loss, start_time, named_parameters):
+def log_loss(batch_idx, running_loss, start_time, named_parameters, parameters_file):
 
     def print_loss(num_batches):
         nonlocal batch_idx
@@ -8,8 +8,9 @@ def log_loss(batch_idx, running_loss, start_time, named_parameters):
         nonlocal start_time
         end_time = time.time()
         print(f'[, {batch_idx + 1:5d}] loss: {running_loss / num_batches:.3f} time: {(end_time - start_time) :.3f}')
-        for name, param in named_parameters:
-            print(f"{name}: {param.size()}, gradient size: {param.grad.size()}")
+        if parameters_file is not None:
+            for name, param in named_parameters:
+                parameters_file.write(f"{name}: {param.size()}, gradient size: {param.grad.size()}\n")
         start_time = time.time()
         running_loss = 0.0
 
