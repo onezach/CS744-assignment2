@@ -54,7 +54,7 @@ def train_model(model, train_loader, optimizer, criterion, epoch, world_size, ra
         # print statistics
         running_loss += loss.item()
 
-        log_loss(batch_idx, running_loss, start_time, model.parameters())
+        log_loss(batch_idx, running_loss, start_time, model.named_parameters())
 
     return None
 
