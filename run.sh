@@ -32,9 +32,9 @@ main() {
         mkdir -p "$LOG_DIR/part$part_id" || echo "Failed to create log directory for part$part_id"
         rank=0
         for worker_port in "${WORKERS_PORT[@]}"; do
-            sleep 10  # Ensure staggered starts to help avoid port conflicts
             part $part_id $rank $worker_port
             ((rank++))
+            sleep 10  # Ensure staggered starts to help avoid port conflicts
         done
         echo "Waiting for part$part_id to complete. This could take a while..."
         wait # Wait for all background processes to complete before exiting
