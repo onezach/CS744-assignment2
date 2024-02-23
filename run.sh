@@ -14,7 +14,7 @@ part() {
 }
 
 part1() {
-    mkdir -p "$LOG_DIR/part1"  # Ensure the directory exists
+    mkdir -p "$LOG_DIR/part1/parameters"  # Ensure the directory exists
     echo "Starting part1"
     cd $HOME/CS744-assignment2/main/part1 && ./run-p1.sh 0 > "$LOG_DIR/part1/log" 
 }
@@ -29,7 +29,7 @@ main() {
     elif [ "$1" == "2a" ] || [ "$1" == "2b" ] || [ "$1" == "3" ]; then
         part_id=("$1")
         # part 2a, 2b, 3
-        mkdir -p "$LOG_DIR/part$part_id" || echo "Failed to create log directory for part$part_id"
+        mkdir -p "$LOG_DIR/part$part_id/parameters" || echo "Failed to create log directory for part$part_id"
         rank=0
         for worker_port in "${WORKERS_PORT[@]}"; do
             part $part_id $rank $worker_port
