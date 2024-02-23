@@ -52,7 +52,7 @@ def train_model(model, train_loader, optimizer, criterion, epoch):
         running_loss += loss.item()
         # root_dir/logs/part3/parameters
         root_dir = os.path.dirname(parent_dir)
-        log_dir = os.path.join(root_dir, "logs", "part3", "parameters")
+        log_dir = os.path.join(root_dir, "logs", "part1", "parameters")
         
         start_time, running_loss = log_loss(batch_idx, running_loss, start_time, model.named_parameters(), log_dir)
 
