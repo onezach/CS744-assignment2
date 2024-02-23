@@ -11,7 +11,7 @@ def log_loss(batch_idx, running_loss, start_time, named_parameters, log_dir):
 
         end_time = time.time()
 
-        print(f'[, {batch_idx + 1:5d}] loss: {running_loss / num_batches:.3f} time: {(end_time - start_time) :.3f}')
+        print(f'[, {batch_idx + 1:5d}] loss: {running_loss / num_batches:.3f} time per iteration: {(end_time - start_time) / num_batches :.3f}')
 
         if log_dir is not None:
             with open(f"{log_dir}/batch_{batch_idx+1}.txt", "w") as parameters_file:
