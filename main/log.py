@@ -6,6 +6,9 @@ def log_loss(batch_idx, running_loss, start_time, named_parameters, log_dir):
         nonlocal batch_idx
         nonlocal running_loss
         nonlocal start_time
+        nonlocal named_parameters
+        nonlocal log_dir
+        
         end_time = time.time()
 
         print(f'[, {batch_idx + 1:5d}] loss: {running_loss / num_batches:.3f} time: {(end_time - start_time) :.3f}')
