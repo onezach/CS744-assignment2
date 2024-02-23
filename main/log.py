@@ -8,13 +8,13 @@ def log_loss(batch_idx, running_loss, start_time, named_parameters, log_dir):
         nonlocal start_time
         nonlocal named_parameters
         nonlocal log_dir
-        
+
         end_time = time.time()
 
         print(f'[, {batch_idx + 1:5d}] loss: {running_loss / num_batches:.3f} time: {(end_time - start_time) :.3f}')
 
         if log_dir is not None:
-            with open(f"{log_dir}/batch_{batch_idx}.txt", "w") as parameters_file:
+            with open(f"{log_dir}/batch_{batch_idx+1}.txt", "w") as parameters_file:
                 for name, param in named_parameters:
                     parameters_file.write(f"{name}: {param.size()}, gradient size: {param.grad.size()}\n")
                 parameters_file.close()
