@@ -1,18 +1,20 @@
 import time
 
-def log_loss(batch_idx, running_loss, start_time, named_parameters, parameters_file):
+def log_loss(batch_idx, running_loss, start_time, named_parameters, log_dir):
 
     def print_loss(num_batches):
         nonlocal batch_idx
         nonlocal running_loss
         nonlocal start_time
         end_time = time.time()
+
         print(f'[, {batch_idx + 1:5d}] loss: {running_loss / num_batches:.3f} time: {(end_time - start_time) :.3f}')
-        if parameters_file is not None:
-            for name, param in named_parameters:
-                parameters_file.write(f"{name}: {param.size()}, gradient size: {param.grad.size()}\n")
-        start_time = time.time()
-        running_loss = 0.0
+
+        if log_dir is not None:
+            with open(f"{log_dir}/batch_{batch_idx}.txt", "w") as parameters_file:
+                for name, param in named_parameters:
+                    parameters_file.write(f"{name}: {param.size()}, gradient size: {param.grad.size()}\n")
+                parameters_file.close()
 
     if batch_idx == 0:    # print at the first mini-batch
         print_loss(1)
@@ -22,3 +24,10 @@ def log_loss(batch_idx, running_loss, start_time, named_parameters, parameters_f
         print_loss(40)
     elif batch_idx == 195: # the last batch is #195
         print_loss(36)
+    else:
+        return start_time, running_loss
+
+    start_time = time.time()
+    running_loss = 0.0
+
+    return start_time, running_loss
