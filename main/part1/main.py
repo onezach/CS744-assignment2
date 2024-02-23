@@ -1,4 +1,4 @@
-import os
+import os, sys
 import torch
 import json
 import copy
@@ -11,6 +11,13 @@ import logging
 import random
 import model as mdl
 import time
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
+
+from log import log_loss
+
 device = "cpu"
 torch.set_num_threads(4)
 
@@ -43,24 +50,11 @@ def train_model(model, train_loader, optimizer, criterion, epoch):
 
         # print statistics
         running_loss += loss.item()
-
-        if batch_idx == 0:    # print at the first mini-batch
-            end_time = time.time()
-            print(f'[, {batch_idx + 1:5d}] loss: {running_loss:.3f} time: {(end_time - start_time) :.3f}')
-            start_time = time.time()
-            running_loss = 0.0
-        elif batch_idx == 39:    # print at the 40th mini-batch
-            end_time = time.time()
-            print(f'[, {batch_idx + 1:5d}] loss: {running_loss / 39:.3f} time: {(end_time - start_time) / 39 :.3f}')
-            start_time = time.time()
-            running_loss = 0.0
-        elif (batch_idx+1) %40==0:    # print every 40 mini-batch
-            end_time = time.time()
-            print(f'[, {batch_idx + 1:5d}] loss: {running_loss / 40:.3f} time: {(end_time - start_time) / 40 :.3f}')
-            start_time = time.time()
-            running_loss = 0.0
-
-        # print(f'[, {batch_idx + 1:5d}] loss: {running_loss :.3f} time: {(end_time - start_time) :.3f}')
+        # root_dir/logs/part3/parameters
+        root_dir = os.path.dirname(parent_dir)
+        log_dir = os.path.join(root_dir, "logs", "part3", "parameters")
+        
+        start_time, running_loss = log_loss(batch_idx, running_loss, start_time, model.named_parameters(), log_dir)
 
     return None
 
