@@ -54,7 +54,9 @@ def train_model(model, train_loader, optimizer, criterion, epoch, world_size, ra
         # print statistics
         running_loss += loss.item()
         if rank == 0:
-            log_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "parameters"))
+            # root_dir/logs/part3/parameters
+            root_dir = os.path.dirname(parent_dir)
+            log_dir = os.path.join(root_dir, "logs", "part3", "parameters")
         else:
             log_dir = None
         
