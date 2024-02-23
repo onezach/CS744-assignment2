@@ -10,12 +10,12 @@ part() {
     local rank=$2 # 0, 1, 2, 3
     local worker_port=$3 # 60000, 60001, 60002, 60003
     ssh -p "$worker_port" "$HOST_NAME" "cd $HOME/CS744-assignment2/main/part$part_id && ./run-p$part_id.sh $rank" > "$LOG_DIR/part$part_id/rank$rank.log" &
-    echo "Started part$part_id with rank $rank on $HOST_NAME:$worker_port"
+    echo "Running part$part_id with rank $rank on $HOST_NAME:$worker_port"
 }
 
 part1() {
     mkdir -p "$LOG_DIR/part1/parameters"  # Ensure the directory exists
-    echo "Starting part1"
+    echo "Running part1"
     cd $HOME/CS744-assignment2/main/part1 && ./run-p1.sh 0 > "$LOG_DIR/part1/log" 
 }
 
