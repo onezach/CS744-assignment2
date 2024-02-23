@@ -65,7 +65,7 @@ def train_model(model, train_loader, optimizer, criterion, epoch, world_size, ra
         if rank == 0:
             # root_dir/logs/part3/parameters
             root_dir = os.path.dirname(parent_dir)
-            log_dir = os.path.join(root_dir, "logs", "part3", "parameters")
+            log_dir = os.path.join(root_dir, "logs", "part2b", "parameters")
         else:
             log_dir = None
         
