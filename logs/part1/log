@@ -1,10 +1,11 @@
 Files already downloaded and verified
 Files already downloaded and verified
 Epoch 0
-[,     1] loss: 2.529 time: 1.924
-[,    40] loss: 5.516 time: 1.492
-[,    80] loss: 2.306 time: 1.482
-[,   120] loss: 2.256 time: 1.435
-[,   160] loss: 2.201 time: 1.452
-Test set: Average loss: 2.2015, Accuracy: 1968/10000 (20%)
+[,     1] loss: 2.676 time per iteration: 1.889
+[,    40] loss: 3.830 time per iteration: 1.417
+[,    80] loss: 2.322 time per iteration: 1.435
+[,   120] loss: 2.281 time per iteration: 1.384
+[,   160] loss: 2.246 time per iteration: 1.396
+[,   196] loss: 2.168 time per iteration: 1.392
+Test set: Average loss: 2.1517, Accuracy: 1748/10000 (17%)
 
