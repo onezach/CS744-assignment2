@@ -54,11 +54,11 @@ def train_model(model, train_loader, optimizer, criterion, epoch, world_size, ra
         # print statistics
         running_loss += loss.item()
         if rank == 0:
-            with open("parameters.txt", "w") as parameters_file:
-                log_loss(batch_idx, running_loss, start_time, model.named_parameters(), parameters_file)
+            log_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "parameters"))
         else:
-            log_loss(batch_idx, running_loss, start_time, model.named_parameters(), None)
-        parameters_file.close()
+            log_dir = None
+        
+        start_time, running_loss = log_loss(batch_idx, running_loss, start_time, model.named_parameters(), log_dir)
 
     return None
 
